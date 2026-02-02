@@ -5,5 +5,5 @@ https://github.com/bandrewfox/docker_bioconductor_3_10_extras/pkgs/container/doc
 
 I didn't want to rebuild the whole thing, so I am adding on top of that one
 
-Then I added an upgrade line to the v2:
+Then I copied my v2 Dockerfile and added OS upgrade lines:
 https://github.com/bandrewfox/docker_bioconductor_3_10_extras_v2
