@@ -7,7 +7,13 @@ RUN echo 'options(BioC_mirror = "https://packagemanager.posit.co/bioconductor")'
 RUN install2.r --error gridtext 
 RUN install2.r --error ggpubr
 RUN install2.r --error survminer
-   
+
+# Legacy fixes from install_extra_packages.R
+RUN R -q -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/rvcheck/rvcheck_0.1.8.tar.gz", repos = NULL, type = "source")'
+RUN R -q -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/yulab.utils/yulab.utils_0.0.1.tar.gz", repos = NULL, type = "source")'
+
+# Bioconductor packages from install_extra_packages.R
+RUN R -q -e 'BiocManager::install(c("clusterProfiler","enrichplot","DOSE","GOSemSim"), version = "3.10", update = FALSE, ask = FALSE, force = TRUE)'
 
 # Fix for Debian Buster EOL repositories to allow security upgrades
 RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && \
@@ -15,3 +21,4 @@ RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.l
     apt-get update -o Acquire::Check-Valid-Until=false && \
     apt-get upgrade -y -o Acquire::Check-Valid-Until=false && \
     apt-get clean
+
